@@ -13,9 +13,14 @@ public class TestController {
 
     private final TestService testService;
 
-    @GetMapping
+    @GetMapping("/permit-all")
     public Object getTest() throws Exception {
         return testService.getTest();
+    }
+
+    @GetMapping("/auth")
+    public Object getTest2() throws Exception {
+        return testService.getTest2();
     }
 
 }
