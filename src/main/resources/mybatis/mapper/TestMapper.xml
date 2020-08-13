@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cowork.dutystem.mapper.TestMapper">
+
+    <resultMap id="boardMap" type="com.cowork.dutystem.entity.Board">
+        <result column="boardJson" property="boardJson" typeHandler=""/>
+    </resultMap>
+
+    <select id="getTestTitle1" resultType="String">
+        SELECT
+            title
+        FROM tblboard
+        WHERE boardseq = 1;
+    </select>
+
+    <select id="getTestTitle2" resultType="String">
+        SELECT
+            title
+        FROM tblboard
+        WHERE boardseq = 2;
+    </select>
+
+    <select id = "getBoard" resultType="com.cowork.dutystem.entity.Board">
+        select * from tblboard where boardseq = 1;
+    </select>
+
+</mapper>
