@@ -1,5 +1,6 @@
 package com.cowork.dutystem.configuration;
 
+import com.cowork.dutystem.configuration.security.CustomAuthenticationEntryPoint;
 import com.cowork.dutystem.configuration.security.CustomUserDetailsService;
 import com.cowork.dutystem.configuration.security.SecurityAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -19,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,6 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션의 상태를 가지지 않겠다.
                     .and()
+                .exceptionHandling()
+                    .authenticationEntryPoint(authenticationEntryPoint)
+                    .accessDeniedHandler(accessDeniedHandler)
+                    .and()
                 .authorizeRequests()    // 이제부터 request의 인증을 확인하겠다.
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() //브라우저의 preflight 요청은 무조건 허용 -> cors 이슈와 관련이 있다.
                 // 허용할 uri를 하나씩 추가하면 된다.
@@ -47,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 /* ========================================================================================================================================== */
 
 /* ==================================================== 인증할 URL ============================================================================ */
-                .antMatchers("/api/v1/test/auth").authenticated()   // /test/auth 라는 uri는 무조건 인증을 받아야한다.
+                .antMatchers("/api/v1/test/auth").hasRole("AUTH")   // /test/auth 라는 uri는 무조건 인증을 받아야한다.
 
 /* ========================================================================================================================================== */
                 .antMatchers("/**").authenticated()          // 위를 포함하지 않는 나머지는 모두 인증을 받아야 한다.
