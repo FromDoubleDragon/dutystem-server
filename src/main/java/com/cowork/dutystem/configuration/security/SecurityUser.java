@@ -7,6 +7,12 @@ import java.util.Collection;
 
 public class SecurityUser implements UserDetails {
 
+    private String username;
+
+    public SecurityUser(String username) {
+        this.username = username;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -19,7 +25,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "test";
+        return this.username;
     }
 
     @Override

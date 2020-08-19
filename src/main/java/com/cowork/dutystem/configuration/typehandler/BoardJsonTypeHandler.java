@@ -22,7 +22,7 @@ public class BoardJsonTypeHandler implements TypeHandler<BoardJson> {
     @Override
     public BoardJson getResult(ResultSet resultSet, String columnName) throws SQLException {
         String boardJson = resultSet.getString(columnName);
-        
+        return null;
     }
 
     @Override

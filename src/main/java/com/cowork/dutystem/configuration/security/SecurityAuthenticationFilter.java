@@ -19,8 +19,8 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        UserDetails authentication = customUserDetailsService.loadUserByUsername("test"); //아무 값이나 집어넣음.
+        String username = request.getRequestURI().contains("/auth") ? "not test" : "test";
+        UserDetails authentication = customUserDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authentication.getUsername(), null, null); //여기있는 super.setAuthenticated(true); 를 타야함.
         SecurityContextHolder.getContext().setAuthentication(auth);
         filterChain.doFilter(request, response);

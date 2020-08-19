@@ -10,10 +10,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
-        System.out.println("/auth url은 인증을 받습니다.");
-
-        return new SecurityUser();
+        if (!s.equals("test")) throw new UsernameNotFoundException("해당 유저가 존재하지 않습니다.");
+        return new SecurityUser(s);
     }
 
 }
