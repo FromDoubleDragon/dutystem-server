@@ -23,4 +23,9 @@ public class TestController {
         return testService.getTest2();
     }
 
+    @GetMapping("/board")
+    public Object getBoard() throws Exception {
+        return testService.getBoard();
+    }
+
 }

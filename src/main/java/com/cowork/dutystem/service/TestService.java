@@ -1,15 +1,27 @@
 package com.cowork.dutystem.service;
 
+import com.cowork.dutystem.entity.Board;
+import com.cowork.dutystem.mapper.TestMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestService {
 
-    public Object getTest() throws Exception {
-        return "test";
+    @Autowired
+    private TestMapper testMapper;
+
+    public String getTest() throws Exception {
+        return testMapper.getTestTitle1();
     }
 
-    public Object getTest2() {
-        return "test2";
+    public String getTest2() throws Exception {
+        return testMapper.getTestTitle2();
     }
+
+    public Board getBoard() throws Exception {
+        Board board = testMapper.getBoard();
+        return board;
+    }
+
 }
