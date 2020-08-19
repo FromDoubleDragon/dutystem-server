@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 public class TestService {
 
     public Object getTest() throws Exception {
-        throw new Exception("에러 발생");
+        return "test";
     }
 
+    public Object getTest2() {
+        return "test2";
+    }
 }
